@@ -1,0 +1,120 @@
+﻿@model IEnumerable<DemoGoogleSpeechs.Models.ReponseText>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutSpeech.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div style="margin-top:15px">
+    <div style="background-color:#f2f2f2;padding:8px;margin-bottom:10px;">
+        <label class="radio-inline"><input type="radio" name="radioSelect" value="STT" checked>Từ giọng nói sang văn bản</label>
+        <label class="radio-inline"><input type="radio" name="radioSelect" value="TTS">Từ văn bản sang giọng nói</label>
+        <label class="radio-inline"><input type="radio" name="radioSelect" value="TS">Chuyển ngữ thoại</label>
+    </div>
+    <div class="pnl_form" data-value="STT">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <select id="selectLanguage" class="form-control">
+                        <option id="selectLanguageVi" value="vi">Tiếng Việt</option>
+                        <option id="selectLanguageEn" value="en">English</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" id="sendmessage">
+                            <i class="fa fa-microphone" style="font-size:16px;margin-right:6px;"></i>Bắt đầu nói...
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-8" style="font-style:italic;padding-left:10px;">
+                Lưu ý: Bạn cần cắm thiết bị microphone vào để bắt đầu nói vài câu chuyện...
+            </div>
+        </div>
+        <h4 style="margin-top:15px;">Kết quả:</h4>
+        <div class="panel panel-info">
+            <div class="panel-body">
+                <div id="STTText">Hãy bắt đầu nói vài câu chuyện nào đó vào microphone của bạn...</div>
+            </div>
+        </div>
+    </div>
+    <div class="pnl_form hide" data-value="TTS">
+        <div style="margin-bottom:10px">
+            <div>
+                <select class="form-control" id="selectLanguageTextToSpeech" style="margin-right:30px;font-size:17px;height:30px;width:150px">
+                    <option id="selectLanguageTextToSpeechVi" value="vi">Tiếng Việt</option>
+                    <option id="selectLanguageTextToSpeechEn" value="en">English</option>
+                </select>
+            </div>
+        </div>
+        <div id="textTTS">
+            <div>
+                <textarea placeholder="Mời bạn nhập văn bản!!!" class="panel-body" id="textTTSValue" style="height:300px;width:700px; ">  </textarea>
+            </div>
+            <div style="margin-bottom:13px;margin-top:13px">
+                <i>Lưu ý: Bạn cần cắm thiết bị microphone vào để bắt đầu nghe...</i>
+            </div>
+            <div>
+                <button class="btn btn-primary" id="btnTTP">
+                    <i class="fa fa-headphones" style="color:aliceblue; padding-right:4px"></i>
+                    Bắt đầu nghe
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="pnl_form hide" data-value="TS">
+        <div>
+            <select id="selectLanguageTranslation" style="margin-right:30px;font-size:12px;height:30px;width:222px">
+                <option id="selectLanguageTranslationVi" value="vi">Tiếng Việt sang tiếng Anh</option>
+                <option id="selectLanguageTranslationEn" value="en">Tiếng Anh sang tiếng Việt</option>
+            </select>
+            <button class="btn btn-primary" id="btnSpeakStranslation"><i class="fa fa-microphone" style="color:aliceblue; padding-right:4px; font-size:20px"></i>Bắt đầu nói...</button>
+        </div>
+        <div id="Translation">
+            <table>
+                <tr>
+                    <td>
+                        <div><b id="bVi">Tiếng Việt:</b></div>
+                    </td>
+                    <td>
+                        <div>
+                            <b id="bEn">English:</b>
+                            <div style="float:right; padding-bottom:6px"><button id="btnTSClick"><i class="fa fa-headphones" style="color:darkviolet; padding-right:4px"></i>Nghe thử</button></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-right:20px">
+                        <div id="vi">
+                            @*<div><b id="bVi">Tiếng Việt:</b></div>*@
+                            <div id="textVi" style="min-height:300px;height:auto;width:500px;border:1px solid #808080;padding:10px;">
+                                @*<textarea id="textVi" style="height:300px;width:500px"></textarea>*@
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="en">
+                            <div id="textEN" style="min-height:300px;height:auto;width:500px;border:1px solid #808080;padding:10px;">
+                                @*<textarea id="textEN" style="height:300px;width:500px"></textarea>*@
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+@*<div id="loading" style="display:none">
+        <span><i class="fa fa-refresh fa-spin"></i>Đang xử lý...</span>
+    </div>*@
+@section scripts {
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+
+
+    @*<script src="~/Scripts/btnSpeakTranslation.js"></script>*@
+    <script src="~/Scripts/btnSpeechToText.js"></script>
+
+    <script src="~/Scripts/btnTranslationListenTry.js"></script>
+    <script src="~/Scripts/btnTextToSpeech.js"></script>
+    <script src="~/Scripts/radio.js"></script>
+}

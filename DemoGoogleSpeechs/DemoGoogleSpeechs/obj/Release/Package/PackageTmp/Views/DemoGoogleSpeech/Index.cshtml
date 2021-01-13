@@ -1,0 +1,96 @@
+﻿@model IEnumerable<DemoGoogleSpeechs.Models.ReponseText>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutSpeech.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .radioSelect {
+        padding-left: 20px;
+    }
+</style>
+<div style="margin-top:30px">
+    <div>
+        <p>Vui lòng bật microphone để bắt đầu nói vài câu chuyện</p>
+    </div>
+    <div>
+        <input class="radioSelect" id="STT" type="radio" value="STT" checked="checked" onclick="STTClick()" /> Chuyển giọng nói sang văn bản
+        <input class="radioSelect" id="TTS" type="radio" value="TTS" onclick="TTSClick()" style="margin-left:10px" /> Chuyển văn bản sang giọng nói
+        <input class="radioSelect" id="TS" type="radio" value="TS" onclick="TSClick()" style="margin-left:10px" /> Dịch văn bản
+    </div>
+    <div>
+            <select id="selectLanguage" style="margin-right:30px;font-size:12px;height:30px;width:150px">
+                <option id="selectLanguageVi" value="vi">Tiếng Việt</option>
+                <option id="selectLanguageEn" value="en">Tiếng Anh</option>
+            </select>
+        <button id="sendmessage"><i class="fa fa-microphone" style="color:cadetblue; padding-right:4px; font-size:20px"></i>Bắt đầu nói...</button>
+    </div>
+    <div id="loading" style="display:none">
+        <span><i class="fa fa-refresh fa-spin"></i>Đang xử lý...</span>
+    </div>
+    <div>
+        <b>Nội Dung:</b>
+    </div>
+    <div id="textTTS" style="display:none">
+        <div id="textTTSValue" style="min-height:300px;height:auto;width:500px;border:1px solid #808080;padding:10px;">
+        </div>
+        <div>
+            <button id="btnTTP">
+                <i class="fa fa-headphones" style="color:darkviolet; padding-right:4px"></i>   Nghe thử
+            </button>
+        </div>
+    </div>
+    <div id="STTText" style="min-height:300px;height:auto;width:500px;border:1px solid #808080;padding:10px;">
+    </div>
+    <div id="Translation" style="display:none; ">
+        <table>
+            <tr>
+                <td>
+                    <div><b id="bVi">Tiếng Việt:</b></div>
+                </td>
+                <td>
+                    <div>
+                        <b>English:</b>
+                        <div style="float:right; padding-bottom:6px"><button id="btnTSClick"><i class="fa fa-headphones" style="color:darkviolet; padding-right:4px"></i>Nghe thử</button></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-right:20px">
+                    <div id="vi">
+                        @*<div><b id="bVi">Tiếng Việt:</b></div>*@
+                        <div id="textVi" style="min-height:300px;height:auto;width:500px;border:1px solid #808080;padding:10px;">                          
+                            @*<textarea id="textVi" style="height:300px;width:500px"></textarea>*@
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div id="en">                       
+                        <div id="textEN" style="min-height:300px;height:auto;width:500px;border:1px solid #808080;padding:10px;">                        
+                            @*<textarea id="textEN" style="height:300px;width:500px"></textarea>*@
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+
+    <script src="~/Scripts/btnSpeechToTextTranslation.js"></script>
+    @*<script src="~/Scripts/btnSpeechToText.js"></script>*@
+    <script src="~/Scripts/btnTranslation.js"></script>
+    <script src="~/Scripts/btnTextToSpeech.js"></script>
+
+    <script src="~/Scripts/rdoTTS.js"></script>
+    <script src="~/Scripts/rdoSTT.js"></script>
+    <script src="~/Scripts/rdoTranslation.js"></script>   
+    @*<script>
+        $("#selectLanguageEn").click(function () {
+            $("#textVi").val()
+        })
+    </script>*@
+}
